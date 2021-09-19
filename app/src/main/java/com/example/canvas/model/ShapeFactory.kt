@@ -1,10 +1,43 @@
 package com.example.canvas.model
 
-abstract class ShapeFactory {
-    abstract fun newInstance(width: Int, height: Int): Shape
+import android.graphics.PointF
+import android.util.Size
+import com.example.canvas.util.RandomUtil
 
-    companion object {
-        fun createShape(shapeFactory: ShapeFactory, width: Int, height: Int): Shape =
-            shapeFactory.newInstance(width, height)
-    }
+object ShapeFactory {
+    private fun createRectangle(width: Int, height: Int): Rectangle = Rectangle(
+        RandomUtil.getRandomID(),
+        Shape.ShapeType.RECT,
+        PointF((0..width).random().toFloat(), (0..height).random().toFloat()),
+        Size(Shape.SHAPE_SIZE_WIDTH, Shape.SHAPE_SIZE_HEIGHT),
+        (1..10).random(),
+        RandomUtil.getRandomColor()
+    )
+
+    private fun createPicture(width: Int, height: Int): Picture = Picture(
+        RandomUtil.getRandomID(),
+        Shape.ShapeType.PICTURE,
+        PointF((0..width).random().toFloat(), (0..height).random().toFloat()),
+        Size(Shape.SHAPE_SIZE_WIDTH, Shape.SHAPE_SIZE_HEIGHT),
+        (1..10).random(),
+        RandomUtil.getRandomColor(),
+        null
+    )
+
+    private fun createText(width: Int, height: Int): Text = Text(
+        RandomUtil.getRandomID(),
+        Shape.ShapeType.TEXT,
+        PointF((0..width).random().toFloat(), (0..height).random().toFloat()),
+        Size(Shape.SHAPE_SIZE_WIDTH, Shape.SHAPE_SIZE_HEIGHT),
+        (1..10).random(),
+        RandomUtil.getRandomColor(),
+        "TEXT"
+    )
+
+    fun createShape(shapeType: Shape.ShapeType, width: Int, height: Int): Shape =
+        when (shapeType) {
+            Shape.ShapeType.RECT -> createRectangle(width, height)
+            Shape.ShapeType.PICTURE -> createPicture(width, height)
+            Shape.ShapeType.TEXT -> createText(width, height)
+        }
 }
