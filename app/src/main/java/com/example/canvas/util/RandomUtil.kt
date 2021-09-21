@@ -15,7 +15,7 @@ object RandomUtil {
     }
 
     fun getRandomColor(): String {
-        val sb = StringBuilder("#")
+        val sb = StringBuilder()
         repeat(6) { sb.append(RANDOM_COLOR[RANDOM_COLOR.indices.random()]) }
         return sb.toString()
     }
