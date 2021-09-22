@@ -41,6 +41,16 @@ class CanvasModel {
     }
 
     fun endDrawing() {
+        currentShape?.apply {
+            if (size.width < 0) {
+                point.x = point.x + size.width
+                size = Size(kotlin.math.abs(size.width), size.height)
+            }
+            if (size.height < 0) {
+                point.y = point.y + size.height
+                size = Size(size.width, kotlin.math.abs(size.height))
+            }
+        }
         currentShape = null
     }
 }
