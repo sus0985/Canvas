@@ -11,4 +11,4 @@ data class Text(
     override var alpha: Int,
     override var background: String,
     val text: String
-) : Shape(id, shapeType, point, size, alpha, background)
+) : Shape(id, shapeType, point, size, alpha, background, false)

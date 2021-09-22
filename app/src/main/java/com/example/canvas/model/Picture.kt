@@ -12,4 +12,4 @@ data class Picture(
     override var alpha: Int,
     override var background: String,
     val uri: Uri?
-) : Shape(id, shapeType, point, size, alpha, background)
+) : Shape(id, shapeType, point, size, alpha, background, false)

@@ -10,4 +10,4 @@ data class Rectangle(
     override var size: Size,
     override var alpha: Int,
     override var background: String
-) : Shape(id, shapeType, point, size, alpha, background)
+) : Shape(id, shapeType, point, size, alpha, background, false)

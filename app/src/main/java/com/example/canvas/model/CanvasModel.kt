@@ -16,13 +16,15 @@ class CanvasModel {
     fun isShape(x: Float, y: Float): Shape? {
         val list = shapeList.reversed()
 
-        list.forEach { shape ->
+        list.map { it.apply { isSelected = false } }.forEach { shape ->
             with(shape) {
                 if (point.x <= x && point.y <= y && point.x + size.width >= x && point.y + size.height >= y) {
+                    shape.isSelected = true
                     return shape
                 }
             }
         }
+
         return null
     }
 

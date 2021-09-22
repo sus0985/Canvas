@@ -9,7 +9,8 @@ open class Shape(
     open var point: PointF,
     open var size: Size,
     open var alpha: Int,
-    open var background: String
+    open var background: String,
+    var isSelected: Boolean
 ) {
     companion object {
         const val SHAPE_SIZE_WIDTH = 150
