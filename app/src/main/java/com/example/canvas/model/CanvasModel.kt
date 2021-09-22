@@ -1,21 +1,29 @@
 package com.example.canvas.model
 
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.PointF
 import android.util.Size
 
 class CanvasModel {
-    private val shapeList = mutableListOf<Shape>()
+    private val _shapeList = mutableListOf<Shape>()
+    val shapeList: List<Shape> get() = _shapeList
+
     private var currentShape: Shape? = null
 
     fun addShape(shape: Shape) {
-        shapeList.add(shape)
+        _shapeList.add(shape)
     }
 
-    fun isShape(x: Float, y: Float): Boolean {
-        // TODO 좌표값 전달 받은 후 도형 안을 클릭했는지 확인
-        return false
+    fun isShape(x: Float, y: Float): Shape? {
+        val list = shapeList.reversed()
+
+        list.forEach { shape ->
+            with(shape) {
+                if (point.x <= x && point.y <= y && point.x + size.width >= x && point.y + size.height >= y) {
+                    return shape
+                }
+            }
+        }
+        return null
     }
 
     fun startDrawing(x: Float, y: Float) {
@@ -32,21 +40,5 @@ class CanvasModel {
 
     fun endDrawing() {
         currentShape = null
-    }
-
-    fun drawShape(canvas: Canvas) {
-        shapeList.forEach { shape ->
-            val paint = Paint().apply {
-                color = Integer.parseInt(shape.background, 16)
-                alpha = shape.alpha * 25 + 5
-            }
-            canvas.drawRect(
-                shape.point.x,
-                shape.point.y,
-                shape.point.x + shape.size.width,
-                shape.point.y + shape.size.height,
-                paint
-            )
-        }
     }
 }
