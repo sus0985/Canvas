@@ -8,12 +8,8 @@ import android.view.View
 class CanvasView(context: Context, attr: AttributeSet?) : View(context, attr) {
     private lateinit var canvasNavigator: CanvasNavigator
 
-    fun setCanvasNavigator(navigator: (canvas: Canvas) -> Unit) {
-        canvasNavigator = object : CanvasNavigator {
-            override fun updateCanvas(canvas: Canvas) {
-                navigator(canvas)
-            }
-        }
+    fun setCanvasNavigator(canvasNavigator: CanvasNavigator) {
+        this.canvasNavigator = canvasNavigator
     }
 
     override fun onDraw(canvas: Canvas?) {

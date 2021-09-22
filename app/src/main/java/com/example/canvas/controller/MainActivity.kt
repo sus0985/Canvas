@@ -20,7 +20,7 @@ import com.example.canvas.model.CanvasModel
 import com.example.canvas.model.Shape
 import com.example.canvas.view.CanvasNavigator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CanvasNavigator {
 
     private lateinit var binding: ActivityMainBinding
     private val canvasModel = CanvasModel()
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        binding.canvas.setCanvasNavigator { updateCanvas(it) }
+        binding.canvas.setCanvasNavigator(this)
         binding.canvasButton.setOnClickListener {
             toggleButton()
         }
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateCanvas(canvas: Canvas) {
+    override fun updateCanvas(canvas: Canvas) {
         canvasModel.shapeList.forEach { shape ->
             val paint = Paint().apply {
                 color = Integer.parseInt(shape.background, 16)
