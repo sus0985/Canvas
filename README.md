@@ -13,3 +13,46 @@
 
 ### 동작 화면
 https://user-images.githubusercontent.com/83066991/134115691-d1696005-872e-45a0-8adf-48db0681a721.mov
+### [작업일: 21년 9월 21일 월요일]
+---
+
+## 추가 작업
+- Floating Action Button을 추가하여 사각형을 그릴지, 그리지 않을지 선택할 수 있도록 했다.
+- Canvas에 interface로 navigator를 만들어 view와 model을 좀 더 명확히 구분할 수 있었다.
+```kotlin
+interface CanvasNavigator {
+  fun updateCanvas(canvas: Canvas)
+}
+```
+- Custom한 View 내에 interface 변수를 선언해두고, Activity에 상속시켜 함수를 override 하였다.
+```kotlin
+class CanvasView(context: Context, attr: AttributeSet?) : View(context, attr) {
+  private lateinit var canvasNavigator: CanvasNavigator
+  
+  fun setCanvasNavigator(canvasNavigator: CanvasNavigator) {
+    this.canvasNavigator = canvasNavigator
+  }
+  
+  override fun onDraw(canvas: Canvas?) {
+    super.onDraw(canvas)
+    canvas ?: return
+    
+    canvasNavigator.updateCanvas(canvas)
+  }
+}
+```
+- 이렇게 만들면서 model 내에 있던 사각형을 그리는 함수 drawShape를 Controller로 이동시킬 수 있었다.
+```kotlin
+class MainActivity : AppCompatActivity(), CanvasNavigator {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    //...
+    binding.canvas.setCanvasNavigator(this)
+    //...
+  }
+}
+```
+### 동작 화면
+https://user-images.githubusercontent.com/83066991/134386718-d345210a-8011-4cb3-a143-785a70abc6e1.mov
+
+### [작업일: 21년 9월 23일 목요일]
