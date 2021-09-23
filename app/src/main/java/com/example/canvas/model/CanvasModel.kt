@@ -1,13 +1,17 @@
 package com.example.canvas.model
 
 import android.graphics.PointF
+import android.net.Uri
 import android.util.Size
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 class CanvasModel {
     private val _shapeList = mutableListOf<Shape>()
     val shapeList: List<Shape> get() = _shapeList
 
-    private var currentShape: Shape? = null
+    private val _currentDrawingShape = MutableLiveData<Shape?>()
+    val currentDrawingShape: LiveData<Shape?> get() = _currentDrawingShape
 
     fun addShape(shape: Shape) {
         _shapeList.add(shape)
@@ -28,29 +32,34 @@ class CanvasModel {
         return null
     }
 
-    fun startDrawing(x: Float, y: Float) {
-        currentShape = ShapeFactory.createShape(Shape.ShapeType.RECT, 0, 0, PointF(x, y)).also {
-            addShape(it)
-        }
+    fun startDrawing(x: Float, y: Float, shapeType: Shape.ShapeType, uri: Uri? = null) {
+        _currentDrawingShape.value =
+            ShapeFactory.createShape(shapeType, PointF(x, y), uri).also {
+                addShape(it)
+            }
     }
 
     fun setCurrentPoint(x: Float, y: Float) {
-        currentShape?.let {
-            it.size = Size((x - it.point.x).toInt(), (y - it.point.y).toInt())
+        _currentDrawingShape.value = _currentDrawingShape.value?.apply {
+            size = Size((x - point.x).toInt(), (y - point.y).toInt())
         }
     }
 
     fun endDrawing() {
-        currentShape?.apply {
-            if (size.width < 0) {
-                point.x = point.x + size.width
-                size = Size(kotlin.math.abs(size.width), size.height)
-            }
-            if (size.height < 0) {
-                point.y = point.y + size.height
-                size = Size(size.width, kotlin.math.abs(size.height))
+        _currentDrawingShape.value?.apply {
+            when (this) {
+                is Rectangle -> {
+                    if (size.width < 0) {
+                        point.x = point.x + size.width
+                        size = Size(kotlin.math.abs(size.width), size.height)
+                    }
+                    if (size.height < 0) {
+                        point.y = point.y + size.height
+                        size = Size(size.width, kotlin.math.abs(size.height))
+                    }
+                }
             }
         }
-        currentShape = null
+        _currentDrawingShape.value = null
     }
 }

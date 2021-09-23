@@ -1,6 +1,7 @@
 package com.example.canvas.model
 
 import android.graphics.PointF
+import android.net.Uri
 import android.util.Size
 import com.example.canvas.util.RandomUtil
 
@@ -14,30 +15,34 @@ object ShapeFactory {
         RandomUtil.getRandomColor()
     )
 
-    private fun createPicture(width: Int, height: Int): Picture = Picture(
+    private fun createPicture(start: PointF, uri: Uri?): Picture = Picture(
         RandomUtil.getRandomID(),
         Shape.ShapeType.PICTURE,
-        PointF((0..width).random().toFloat(), (0..height).random().toFloat()),
-        Size(Shape.SHAPE_SIZE_WIDTH, Shape.SHAPE_SIZE_HEIGHT),
+        start,
+        Size(0, 0),
         (1..10).random(),
         RandomUtil.getRandomColor(),
-        null
+        uri
     )
 
-    private fun createText(width: Int, height: Int): Text = Text(
+    private fun createText(start: PointF): Text = Text(
         RandomUtil.getRandomID(),
         Shape.ShapeType.TEXT,
-        PointF((0..width).random().toFloat(), (0..height).random().toFloat()),
-        Size(Shape.SHAPE_SIZE_WIDTH, Shape.SHAPE_SIZE_HEIGHT),
+        start,
+        Size(0, 0),
         (1..10).random(),
         RandomUtil.getRandomColor(),
         "TEXT"
     )
 
-    fun createShape(shapeType: Shape.ShapeType, width: Int, height: Int, start: PointF): Shape =
+    fun createShape(
+        shapeType: Shape.ShapeType,
+        start: PointF,
+        uri: Uri? = null
+    ): Shape =
         when (shapeType) {
             Shape.ShapeType.RECT -> createRectangle(start)
-            Shape.ShapeType.PICTURE -> createPicture(width, height)
-            Shape.ShapeType.TEXT -> createText(width, height)
+            Shape.ShapeType.PICTURE -> createPicture(start, uri)
+            Shape.ShapeType.TEXT -> createText(start)
         }
 }
