@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,17 +45,6 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
         }
 
         binding.canvas.setCanvasNavigator(this)
-        binding.canvasButton.setOnClickListener {
-            toggleButton()
-        }
-        binding.rectButton.setOnClickListener {
-            toggleButton()
-            drawingOption = Shape.ShapeType.RECT
-        }
-        binding.cancelButton.setOnClickListener {
-            toggleButton()
-            drawingOption = null
-        }
     }
 
     private fun drawShape(event: MotionEvent?) {
@@ -107,9 +97,15 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
         }
     }
 
-    private fun toggleButton() {
+    fun toggleButton(view: View) {
         val openAnimation = AnimationUtils.loadAnimation(this, R.anim.floating_action_button_open)
         val closeAnimation = AnimationUtils.loadAnimation(this, R.anim.floating_action_button_close)
+
+        when (view.id) {
+            R.id.cancelButton -> drawingOption = null
+            R.id.rectButton -> drawingOption = Shape.ShapeType.RECT
+        }
+
         with(binding) {
             if (isButtonOpen) {
                 canvasButton.setImageResource(R.drawable.ic_plus)

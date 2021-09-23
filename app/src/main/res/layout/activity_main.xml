@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="main"
             type="com.example.canvas.controller.MainActivity" />
@@ -29,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="@{main::toggleButton}"
             android:src="@drawable/ic_cancel"
             android:visibility="invisible"
             app:fabSize="mini"
@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:onClick="@{main::toggleButton}"
             android:src="@drawable/ic_rectangle"
             android:visibility="invisible"
             app:fabSize="mini"
@@ -48,13 +49,13 @@
             app:layout_constraintEnd_toEndOf="@id/canvasButton"
             app:layout_constraintStart_toStartOf="@id/canvasButton" />
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/canvasButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="3dp"
+            android:onClick="@{main::toggleButton}"
             android:src="@drawable/ic_plus"
             app:fabSize="auto"
             app:layout_constraintBottom_toBottomOf="parent"
