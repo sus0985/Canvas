@@ -56,3 +56,12 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
 https://user-images.githubusercontent.com/83066991/134386718-d345210a-8011-4cb3-a143-785a70abc6e1.mov
 
 ### [작업일: 21년 9월 23일 목요일]
+---
+## 추가 작업
+- 사진을 선택하여 원하는 크기만큼 붙여넣는 동작 구현
+- Text 클래스를 Pen으로 변경하여 펜으로 그리는 동작 구현
+
+### 동작화면
+https://user-images.githubusercontent.com/83066991/134640267-474c45c2-9c55-457f-9f2c-3eee3c87a501.mov
+
+### [작업일: 21년 9월 24일 금요일]
