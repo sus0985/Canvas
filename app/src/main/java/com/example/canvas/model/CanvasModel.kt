@@ -42,6 +42,10 @@ class CanvasModel {
     fun setCurrentPoint(x: Float, y: Float) {
         _currentDrawingShape.value = _currentDrawingShape.value?.apply {
             size = Size((x - point.x).toInt(), (y - point.y).toInt())
+
+            if (this is Pen) {
+                this.pointList.add(PointF(x, y))
+            }
         }
     }
 
@@ -57,6 +61,15 @@ class CanvasModel {
                         point.y = point.y + size.height
                         size = Size(size.width, kotlin.math.abs(size.height))
                     }
+                }
+                is Pen -> {
+                    val left = pointList.minByOrNull { it.x }?.x ?: return
+                    val top = pointList.minByOrNull { it.y }?.y ?: return
+                    val width = pointList.maxByOrNull { it.x }?.let { it.x - left } ?: return
+                    val height = pointList.maxByOrNull { it.y }?.let { it.y - top } ?: return
+
+                    point = PointF(left, top)
+                    size = Size(width.toInt(), height.toInt())
                 }
             }
         }

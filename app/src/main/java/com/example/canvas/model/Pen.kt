@@ -10,5 +10,6 @@ data class Pen(
     override var size: Size,
     override var alpha: Int,
     override var background: String,
-    val pointList: MutableList<PointF>
+    val pointList: MutableList<PointF>,
+    var startPoint: PointF
 ) : Shape(id, shapeType, point, size, alpha, background, false)

@@ -32,7 +32,8 @@ object ShapeFactory {
         Size(0, 0),
         (1..10).random(),
         RandomUtil.getRandomColor(),
-        mutableListOf()
+        mutableListOf(),
+        start
     )
 
     fun createShape(

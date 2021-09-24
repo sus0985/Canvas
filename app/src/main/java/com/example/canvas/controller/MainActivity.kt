@@ -17,12 +17,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.canvas.R
 import com.example.canvas.databinding.ActivityMainBinding
-import com.example.canvas.model.CanvasModel
+import com.example.canvas.model.*
 import com.example.canvas.model.Picture
-import com.example.canvas.model.Rectangle
-import com.example.canvas.model.Shape
 import com.example.canvas.view.CanvasNavigator
-import kotlin.math.abs
+import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), CanvasNavigator {
 
@@ -87,6 +85,7 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
             val paint = Paint().apply {
                 color = Integer.parseInt(shape.background, 16)
                 alpha = shape.alpha * 25 + 5
+                strokeWidth = 5f
             }
             when (shape) {
                 is Rectangle -> canvas.drawRect(
@@ -110,6 +109,13 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
                         shape.point.y,
                         paint
                     )
+                }
+                is Pen -> {
+                    var prev = shape.startPoint
+                    shape.pointList.forEach { point ->
+                        canvas.drawLine(prev.x, prev.y, point.x, point.y, paint)
+                        prev = point
+                    }
                 }
             }
 
@@ -176,5 +182,4 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
             }
         }
     }
-
 }
