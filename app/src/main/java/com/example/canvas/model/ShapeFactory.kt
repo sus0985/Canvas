@@ -25,14 +25,14 @@ object ShapeFactory {
         uri
     )
 
-    private fun createText(start: PointF): Text = Text(
+    private fun createPen(start: PointF): Pen = Pen(
         RandomUtil.getRandomID(),
-        Shape.ShapeType.TEXT,
+        Shape.ShapeType.PEN,
         start,
         Size(0, 0),
         (1..10).random(),
         RandomUtil.getRandomColor(),
-        "TEXT"
+        mutableListOf()
     )
 
     fun createShape(
@@ -43,6 +43,6 @@ object ShapeFactory {
         when (shapeType) {
             Shape.ShapeType.RECT -> createRectangle(start)
             Shape.ShapeType.PICTURE -> createPicture(start, uri)
-            Shape.ShapeType.TEXT -> createText(start)
+            Shape.ShapeType.PEN -> createPen(start)
         }
 }

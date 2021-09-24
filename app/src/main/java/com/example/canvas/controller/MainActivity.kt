@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -139,11 +140,11 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
                 else canvasButton.setImageResource(R.drawable.ic_close)
                 rectButton.startAnimation(anim)
                 pictureButton.startAnimation(anim)
-                textButton.startAnimation(anim)
+                penButton.startAnimation(anim)
                 cancelButton.startAnimation(anim)
                 rectButton.isClickable = !isButtonOpen
                 pictureButton.isClickable = !isButtonOpen
-                textButton.isClickable = !isButtonOpen
+                penButton.isClickable = !isButtonOpen
                 cancelButton.isClickable = !isButtonOpen
             }
         }
@@ -152,13 +153,17 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
             R.id.cancelButton -> drawingOption = null
             R.id.rectButton -> drawingOption = Shape.ShapeType.RECT
             R.id.pictureButton -> getContent.launch("image/*")
-            R.id.textButton -> drawingOption = Shape.ShapeType.TEXT
+            R.id.penButton -> drawingOption = Shape.ShapeType.PEN
         }
 
         if (isButtonOpen) setAnimation(closeAnimation)
         else setAnimation(openAnimation)
 
         isButtonOpen = !isButtonOpen
+
+        drawingOption?.let {
+            Toast.makeText(this, it.name, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getBitmapFromUri(): Bitmap? {

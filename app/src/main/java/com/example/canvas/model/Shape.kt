@@ -13,6 +13,6 @@ open class Shape(
     var isSelected: Boolean
 ) {
     enum class ShapeType {
-        RECT, PICTURE, TEXT
+        RECT, PICTURE, PEN
     }
 }

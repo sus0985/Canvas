@@ -46,17 +46,17 @@
             android:src="@drawable/ic_picture"
             android:visibility="invisible"
             app:fabSize="mini"
-            app:layout_constraintBottom_toTopOf="@id/textButton"
+            app:layout_constraintBottom_toTopOf="@id/penButton"
             app:layout_constraintEnd_toEndOf="@id/canvasButton"
             app:layout_constraintStart_toStartOf="@id/canvasButton" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/textButton"
+            android:id="@+id/penButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:onClick="@{main::onFloatingActionButtonClick}"
-            android:src="@drawable/ic_text"
+            android:src="@drawable/ic_pen"
             android:visibility="invisible"
             app:fabSize="mini"
             app:layout_constraintBottom_toTopOf="@id/cancelButton"
