@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
@@ -20,7 +21,6 @@ import com.example.canvas.databinding.ActivityMainBinding
 import com.example.canvas.model.*
 import com.example.canvas.model.Picture
 import com.example.canvas.view.CanvasNavigator
-import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), CanvasNavigator {
 
@@ -45,11 +45,24 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
             } ?: run { drawingOption = null }
         }
 
-        binding.canvas.setOnTouchListener { _, event ->
+        binding.canvas.setOnTouchListener { v, event ->
+
             if (event.action == MotionEvent.ACTION_DOWN && drawingOption == null) {
-                canvasModel.isShape(event.x, event.y)
+                canvasModel.startMove(canvasModel.isShape(event.x, event.y))
                 binding.canvas.invalidate()
             }
+
+            if (event.pointerCount == 2) {
+                when (event.action) {
+                    MotionEvent.ACTION_MOVE -> {
+                        canvasModel.setMovingPoint(event.x, event.y)
+                    }
+                    MotionEvent.ACTION_POINTER_UP -> {
+                        canvasModel.endMove()
+                    }
+                }
+            }
+
             drawShape(event)
             true
         }
@@ -59,7 +72,12 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
         canvasModel.currentDrawingShape.observe(this) {
             binding.canvas.invalidate()
         }
+
+        canvasModel.movingShape.observe(this) {
+            binding.canvas.invalidate()
+        }
     }
+
 
     private fun drawShape(event: MotionEvent?) {
         event ?: return

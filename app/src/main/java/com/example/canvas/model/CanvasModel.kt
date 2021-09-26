@@ -13,6 +13,9 @@ class CanvasModel {
     private val _currentDrawingShape = MutableLiveData<Shape?>()
     val currentDrawingShape: LiveData<Shape?> get() = _currentDrawingShape
 
+    private val _movingShape = MutableLiveData<Shape?>()
+    val movingShape: LiveData<Shape?> get() = _movingShape
+
     fun addShape(shape: Shape) {
         _shapeList.add(shape)
     }
@@ -74,5 +77,38 @@ class CanvasModel {
             }
         }
         _currentDrawingShape.value = null
+    }
+
+    fun startMove(shape: Shape?) {
+        _movingShape.value = shape
+    }
+
+    fun setMovingPoint(x: Float, y: Float) {
+        _movingShape.value = _movingShape.value?.apply {
+            if (this is Pen) {
+                startPoint.x = startPoint.x + (x - startPoint.x) - size.width / 2
+                startPoint.y = startPoint.y + (y - startPoint.y) - size.height / 2
+
+                pointList.forEach {
+                    it.x = it.x + (x - point.x) - size.width / 2
+                    it.y = it.y + (y - point.y) - size.height / 2
+                }
+            }
+            point.x = x - size.width / 2
+            point.y = y - size.height / 2
+        }
+    }
+
+    fun endMove() {
+        _shapeList.find { _movingShape.value?.id == it.id }?.let {
+            it.point = _movingShape.value?.point ?: return
+
+            if (it is Pen) {
+                it.startPoint = (_movingShape.value as Pen).startPoint
+                it.pointList = (_movingShape.value as Pen).pointList
+            }
+        }
+
+        _movingShape.value = null
     }
 }
