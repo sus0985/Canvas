@@ -61,7 +61,13 @@ https://user-images.githubusercontent.com/83066991/134386718-d345210a-8011-4cb3-
 - 사진을 선택하여 원하는 크기만큼 붙여넣는 동작 구현
 - Text 클래스를 Pen으로 변경하여 펜으로 그리는 동작 구현
 
-### 동작화면
+### 동작 화면
 https://user-images.githubusercontent.com/83066991/134640267-474c45c2-9c55-457f-9f2c-3eee3c87a501.mov
 
 ### [작업일: 21년 9월 24일 금요일]
+---
+## 추가 작업
+- 멀티 터치 시 생성한 Shape을 옮기는 동작 구현
+
+### 동작 화면
+https://user-images.githubusercontent.com/83066991/135494768-0144550a-8f4e-4d15-b60d-0bdec0720729.mov
