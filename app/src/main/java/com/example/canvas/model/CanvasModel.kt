@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Size
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import org.json.JSONObject
 
 class CanvasModel {
     private val _shapeList = mutableListOf<Shape>()
@@ -100,15 +101,6 @@ class CanvasModel {
     }
 
     fun endMove() {
-        _shapeList.find { _movingShape.value?.id == it.id }?.let {
-            it.point = _movingShape.value?.point ?: return
-
-            if (it is Pen) {
-                it.startPoint = (_movingShape.value as Pen).startPoint
-                it.pointList = (_movingShape.value as Pen).pointList
-            }
-        }
-
         _movingShape.value = null
     }
 }

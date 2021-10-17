@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), CanvasNavigator {
         binding.canvas.setOnTouchListener { v, event ->
 
             if (event.action == MotionEvent.ACTION_DOWN && drawingOption == null) {
-                canvasModel.startMove(canvasModel.isShape(event.x, event.y))
+                canvasModel.startMove((canvasModel.isShape(event.x, event.y)))
                 binding.canvas.invalidate()
             }
 
